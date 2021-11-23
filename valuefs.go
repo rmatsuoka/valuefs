@@ -10,7 +10,7 @@ import (
 	"strings"
 )
 
-type FS struct {
+type vfs struct {
 	v reflect.Value
 }
 
@@ -29,11 +29,11 @@ func isDir(v reflect.Value) bool {
 	return false
 }
 
-func New(v interface{}) *FS {
-	return &FS{reflect.ValueOf(v)}
+func New(v interface{}) fs.FS {
+	return fs.FS(&vfs{reflect.ValueOf(v)})
 }
 
-func (fsys *FS) namev(name string) (reflect.Value, error) {
+func (fsys *vfs) namev(name string) (reflect.Value, error) {
 	if !fs.ValidPath(name) {
 		return reflect.Value{}, fs.ErrInvalid
 	}
@@ -77,7 +77,7 @@ func (fsys *FS) namev(name string) (reflect.Value, error) {
 	return v, nil
 }
 
-func (fsys *FS) Open(name string) (fs.File, error) {
+func (fsys *vfs) Open(name string) (fs.File, error) {
 	v, err := fsys.namev(name)
 	if err != nil {
 		return nil, &fs.PathError{"open", name, err}
@@ -88,7 +88,7 @@ func (fsys *FS) Open(name string) (fs.File, error) {
 	return fs.File(newFile(name, v)), nil
 }
 
-func (fsys *FS) ReadDir(name string) ([]fs.DirEntry, error) {
+func (fsys *vfs) ReadDir(name string) ([]fs.DirEntry, error) {
 	v, err := fsys.namev(name)
 	if err != nil {
 		return nil, &fs.PathError{Op: "readdir", Path: name, Err: err}

@@ -21,17 +21,6 @@ func (info *fileInfo) Name() string {
 }
 
 func (info *fileInfo) Size() int64 {
-	rv := recElem(info.v)
-	if !rv.IsValid() {
-		return 0
-	}
-	return int64(rv.Type().Size())
-}
-
-func (info *fileInfo) Type() fs.FileMode {
-	if isDir(info.v) {
-		return fs.ModeDir
-	}
 	return 0
 }
 
@@ -52,6 +41,13 @@ func (info *fileInfo) IsDir() bool {
 
 func (info *fileInfo) Sys() interface{} {
 	return nil
+}
+
+func (info *fileInfo) Type() fs.FileMode {
+	if isDir(info.v) {
+		return fs.ModeDir
+	}
+	return 0
 }
 
 func (info *fileInfo) Info() (fs.FileInfo, error) {
