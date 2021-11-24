@@ -11,8 +11,8 @@ import (
 )
 
 var (
-	errIsDir    = errors.New("is a directory")
-	errNotDir   = errors.New("not a directory")
+	errIsDir  = errors.New("is a directory")
+	errNotDir = errors.New("not a directory")
 )
 
 type vfs struct {

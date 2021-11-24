@@ -32,7 +32,7 @@ func TestOpen(t *testing.T) {
 		Bool:         true,
 		String:       str,
 		Int:          41,
-		Complex:      -1+2i,
+		Complex:      -1 + 2i,
 		Slice:        []string{"こんにちは世界", "hello world"},
 		NilSlice:     nil,
 		Struct:       struct{ Str string }{Str: "File System"},
