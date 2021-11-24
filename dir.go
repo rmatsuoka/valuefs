@@ -1,7 +1,6 @@
 package valuefs
 
 import (
-	"errors"
 	"io/fs"
 	"reflect"
 )
@@ -23,7 +22,7 @@ func (d *dir) Read(b []byte) (int, error) {
 	return 0, &fs.PathError{
 		Op:   "read",
 		Path: d.path,
-		Err:  errors.New("is a directory"),
+		Err:  errIsDir,
 	}
 }
 

@@ -10,6 +10,11 @@ import (
 	"strings"
 )
 
+var (
+	errIsDir    = errors.New("is a directory")
+	errNotDir   = errors.New("not a directory")
+)
+
 type vfs struct {
 	v reflect.Value
 }
@@ -113,7 +118,7 @@ func (fsys *vfs) ReadDir(name string) ([]fs.DirEntry, error) {
 		return []fs.DirEntry{}, &fs.PathError{
 			Op:   "readdir",
 			Path: name,
-			Err:  errors.New("not a directory"),
+			Err:  errNotDir,
 		}
 	}
 	sort.Slice(ds, func(i, j int) bool { return ds[i].Name() < ds[j].Name() })

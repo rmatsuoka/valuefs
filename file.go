@@ -14,10 +14,15 @@ type file struct {
 }
 
 func newFile(path string, v reflect.Value) *file {
+	rv := recElem(v)
+	buf := new(bytes.Buffer)
+	if rv.IsValid() {
+		buf.WriteString(fmt.Sprint(rv))
+	}
 	return &file{
 		path: path,
 		v:    v,
-		buf:  bytes.NewBufferString(fmt.Sprint(recElem(v))),
+		buf:  buf,
 	}
 }
 
